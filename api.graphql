@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  token: String
+  user: User
+}
+
 input BooleanFilter {
   equals: Boolean
   not: Boolean
@@ -40,6 +45,31 @@ input IntFilter {
 The `JSON` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar Json
+
+type Language {
+  code: String!
+  createdAt: DateTime!
+  id: Int!
+  index: Int!
+  name: String!
+  projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
+  rtl: Boolean!
+  slug: String!
+  translations(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
+  updatedAt: DateTime!
+}
+
+input LanguageCreateInput {
+  code: String!
+  createdAt: DateTime
+  index: Int
+  name: String!
+  projects: ProjectCreateManyWithoutLanguagesInput
+  rtl: Boolean
+  slug: String!
+  translations: LanguagesOnTranslationsCreateManyWithoutLanguageInput
+  updatedAt: DateTime
+}
 
 input LanguageCreateManyWithoutProjectsInput {
   connect: [LanguageWhereUniqueInput!]
@@ -95,6 +125,18 @@ input LanguageScalarWhereInput {
   updatedAt: DateTimeFilter
 }
 
+type LanguagesOnTranslations {
+  language: Language!
+  translation: Translation!
+  value: String!
+}
+
+input LanguagesOnTranslationsCreateInput {
+  language: LanguageCreateOneWithoutTranslationsInput!
+  translation: TranslationCreateOneWithoutLanguagesInput!
+  value: String!
+}
+
 input LanguagesOnTranslationsCreateManyWithoutLanguageInput {
   connect: [LanguagesOnTranslationsWhereUniqueInput!]
   create: [LanguagesOnTranslationsCreateWithoutLanguageInput!]
@@ -128,6 +170,12 @@ input LanguagesOnTranslationsScalarWhereInput {
   OR: [LanguagesOnTranslationsScalarWhereInput!]
   translationId: IntFilter
   value: StringFilter
+}
+
+input LanguagesOnTranslationsUpdateInput {
+  language: LanguageUpdateOneRequiredWithoutTranslationsInput
+  translation: TranslationUpdateOneRequiredWithoutLanguagesInput
+  value: String
 }
 
 input LanguagesOnTranslationsUpdateManyDataInput {
@@ -208,6 +256,18 @@ input LanguagesOnTranslationsWhereInput {
 
 input LanguagesOnTranslationsWhereUniqueInput {
   translationId_languageId: TranslationIdLanguageIdCompoundUniqueInput
+}
+
+input LanguageUpdateInput {
+  code: String
+  createdAt: DateTime
+  index: Int
+  name: String
+  projects: ProjectUpdateManyWithoutLanguagesInput
+  rtl: Boolean
+  slug: String
+  translations: LanguagesOnTranslationsUpdateManyWithoutLanguageInput
+  updatedAt: DateTime
 }
 
 input LanguageUpdateManyDataInput {
@@ -303,9 +363,25 @@ input LanguageWhereUniqueInput {
 }
 
 type Mutation {
+  createOneLanguage(data: LanguageCreateInput!): Language!
+  createOneLanguagesOnTranslations(data: LanguagesOnTranslationsCreateInput!): LanguagesOnTranslations!
+  createOneProject(data: ProjectCreateInput!): Project!
+  createOneTranslation(data: TranslationCreateInput!): Translation!
   createOneUser(data: UserCreateInput!): User!
+  createOneView(data: ViewCreateInput!): View!
+  deleteOneLanguage(where: LanguageWhereUniqueInput!): Language
+  deleteOneLanguagesOnTranslations(where: LanguagesOnTranslationsWhereUniqueInput!): LanguagesOnTranslations
+  deleteOneProject(where: ProjectWhereUniqueInput!): Project
+  deleteOneTranslation(where: TranslationWhereUniqueInput!): Translation
   deleteOneUser(where: UserWhereUniqueInput!): User
+  deleteOneView(where: ViewWhereUniqueInput!): View
+  login(email: String!, password: String!): AuthPayload
+  updateOneLanguage(data: LanguageUpdateInput!, where: LanguageWhereUniqueInput!): Language
+  updateOneLanguagesOnTranslations(data: LanguagesOnTranslationsUpdateInput!, where: LanguagesOnTranslationsWhereUniqueInput!): LanguagesOnTranslations
+  updateOneProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
+  updateOneTranslation(data: TranslationUpdateInput!, where: TranslationWhereUniqueInput!): Translation
   updateOneUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateOneView(data: ViewUpdateInput!, where: ViewWhereUniqueInput!): View
 }
 
 input NullableFloatFilter {
@@ -342,6 +418,19 @@ type Project {
   slug: String!
   updatedAt: DateTime!
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
+  views(after: ViewWhereUniqueInput, before: ViewWhereUniqueInput, first: Int, last: Int): [View!]!
+}
+
+input ProjectCreateInput {
+  createdAt: DateTime
+  index: Int
+  languages: LanguageCreateManyWithoutProjectsInput
+  name: String!
+  screenshot: String
+  slug: String!
+  updatedAt: DateTime
+  users: UserCreateManyWithoutProjectsInput
+  views: ViewCreateManyWithoutProjectInput
 }
 
 input ProjectCreateManyWithoutLanguagesInput {
@@ -412,6 +501,18 @@ input ProjectScalarWhereInput {
   updatedAt: DateTimeFilter
   users: UserFilter
   views: ViewFilter
+}
+
+input ProjectUpdateInput {
+  createdAt: DateTime
+  index: Int
+  languages: LanguageUpdateManyWithoutProjectsInput
+  name: String
+  screenshot: String
+  slug: String
+  updatedAt: DateTime
+  users: UserUpdateManyWithoutProjectsInput
+  views: ViewUpdateManyWithoutProjectInput
 }
 
 input ProjectUpdateManyDataInput {
@@ -540,8 +641,17 @@ input ProjectWhereUniqueInput {
 }
 
 type Query {
+  language(where: LanguageWhereUniqueInput!): Language
+  languages(after: LanguageWhereUniqueInput, before: LanguageWhereUniqueInput, first: Int, last: Int, where: LanguageWhereInput): [Language!]!
+  languagesOnTranslations(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
+  project(where: ProjectWhereUniqueInput!): Project
+  projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
+  translation(where: TranslationWhereUniqueInput!): Translation
+  translations(after: TranslationWhereUniqueInput, before: TranslationWhereUniqueInput, first: Int, last: Int): [Translation!]!
   user(where: UserWhereUniqueInput!): User
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
+  view(where: ViewWhereUniqueInput!): View
+  views(after: ViewWhereUniqueInput, before: ViewWhereUniqueInput, first: Int, last: Int): [View!]!
 }
 
 input StringFilter {
@@ -556,6 +666,31 @@ input StringFilter {
   not: String
   notIn: [String!]
   startsWith: String
+}
+
+type Translation {
+  createdAt: DateTime!
+  id: Int!
+  index: Int!
+  key: String!
+  label: String
+  languages(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
+  updatedAt: DateTime!
+  view: View!
+  x: Float
+  y: Float
+}
+
+input TranslationCreateInput {
+  createdAt: DateTime
+  index: Int
+  key: String!
+  label: String
+  languages: LanguagesOnTranslationsCreateManyWithoutTranslationInput
+  updatedAt: DateTime
+  view: ViewCreateOneWithoutTranslationInput!
+  x: Float
+  y: Float
 }
 
 input TranslationCreateManyWithoutViewInput {
@@ -615,6 +750,18 @@ input TranslationScalarWhereInput {
   viewId: IntFilter
   x: NullableFloatFilter
   y: NullableFloatFilter
+}
+
+input TranslationUpdateInput {
+  createdAt: DateTime
+  index: Int
+  key: String
+  label: String
+  languages: LanguagesOnTranslationsUpdateManyWithoutTranslationInput
+  updatedAt: DateTime
+  view: ViewUpdateOneRequiredWithoutTranslationInput
+  x: Float
+  y: Float
 }
 
 input TranslationUpdateManyDataInput {
@@ -831,6 +978,29 @@ input UserWhereUniqueInput {
   id: Int
 }
 
+type View {
+  createdAt: DateTime!
+  id: Int!
+  index: Int!
+  name: String!
+  project: Project!
+  screenshot: String
+  slug: String!
+  translation(after: TranslationWhereUniqueInput, before: TranslationWhereUniqueInput, first: Int, last: Int): [Translation!]!
+  updatedAt: DateTime!
+}
+
+input ViewCreateInput {
+  createdAt: DateTime
+  index: Int
+  name: String!
+  project: ProjectCreateOneWithoutViewsInput!
+  screenshot: String
+  slug: String!
+  translation: TranslationCreateManyWithoutViewInput
+  updatedAt: DateTime
+}
+
 input ViewCreateManyWithoutProjectInput {
   connect: [ViewWhereUniqueInput!]
   create: [ViewCreateWithoutProjectInput!]
@@ -880,6 +1050,17 @@ input ViewScalarWhereInput {
   slug: StringFilter
   translation: TranslationFilter
   updatedAt: DateTimeFilter
+}
+
+input ViewUpdateInput {
+  createdAt: DateTime
+  index: Int
+  name: String
+  project: ProjectUpdateOneRequiredWithoutViewsInput
+  screenshot: String
+  slug: String
+  translation: TranslationUpdateManyWithoutViewInput
+  updatedAt: DateTime
 }
 
 input ViewUpdateManyDataInput {

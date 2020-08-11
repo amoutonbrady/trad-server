@@ -1,0 +1,8 @@
+mutation Auth($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+  }
+}
+
+# Query Variables
+{"email": "amoutonbrady@gmail.com" , "password": "alexandre"}

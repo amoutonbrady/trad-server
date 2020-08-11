@@ -1,0 +1,14 @@
+mutation CreateLanguage($data: LanguageCreateInput!) {
+  createOneLanguage(data: $data) {
+    id
+  }
+}
+
+# Query Variables
+{
+  "data": {
+    "name": "Français",
+    "slug": "french",
+    "code": "fr_FR"
+  }
+}

@@ -1,16 +1,18 @@
 import { schema } from 'nexus'
 
 schema.objectType({
-  name: 'Project',
+  name: 'Translation',
   definition(t) {
     t.model.id()
     t.model.index()
 
-    t.model.name()
-    t.model.screenshot()
-    t.model.slug()
+    t.model.key()
+    t.model.label()
+    t.model.x()
+    t.model.y()
 
-    t.model.users()
+    t.model.languages()
+    t.model.view()
 
     t.model.createdAt()
     t.model.updatedAt()

@@ -1,0 +1,9 @@
+mutation CreateView($data: ViewCreateInput!) {
+  createOneView(data: $data) {
+    id
+  }
+}
+
+
+# Query Variables
+{"data": {"name": "Home", "slug": "home", "project": { "connect": {"id": 1}}}}

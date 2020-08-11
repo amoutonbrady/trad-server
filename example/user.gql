@@ -1,0 +1,14 @@
+mutation CreateUser($user: UserCreateInput!) {
+  createOneUser(data: $user) {
+    id
+  }
+}
+
+# Query Variables
+{
+  "user": {
+    "email": "amoutonbrady@gmail.com",
+    "name": "Alexandre Mouton-Brady",
+    "password": "alexandre"
+  }
+}

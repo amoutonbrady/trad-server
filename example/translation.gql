@@ -1,0 +1,17 @@
+mutation CreateTanslation($data: TranslationCreateInput!) {
+  createOneTranslation(data: $data) {
+    id
+  }
+}
+
+# Query Variables
+{
+  "data": {
+    "key": "title",
+    "label": "Title",
+    "view": { "connect": { "id": 1 } },
+    "languages": {
+      "create": { "value": "Bienvenue", "language": { "connect": { "id": 1 } } }
+    }
+  }
+}
