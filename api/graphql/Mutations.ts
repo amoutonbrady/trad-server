@@ -1,6 +1,6 @@
 import { schema } from 'nexus'
 import bcrypt, { compare } from 'bcrypt'
-import { SECRET } from '../conf'
+import { SECRET } from '../utils'
 import { sign } from 'jsonwebtoken'
 
 schema.mutationType({
