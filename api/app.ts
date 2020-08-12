@@ -1,6 +1,7 @@
-import { use } from 'nexus'
+import { use, server } from 'nexus'
 import { prisma } from 'nexus-plugin-prisma'
 import { auth } from 'nexus-plugin-jwt-auth'
+import { express as voyagerMiddleware } from 'graphql-voyager/middleware'
 import { SECRET, protectedPaths } from './utils'
 
 // Enables Prisma
@@ -20,3 +21,5 @@ use(
     protectedPaths,
   }),
 )
+
+server.express.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }))

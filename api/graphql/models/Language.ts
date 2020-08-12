@@ -3,12 +3,11 @@ import { schema } from 'nexus'
 schema.objectType({
   name: 'Language',
   definition(t) {
-    t.model.id()
+    t.model.code()
     t.model.index()
 
     t.model.name()
     t.model.slug()
-    t.model.code()
     t.model.rtl()
 
     t.model.projects()

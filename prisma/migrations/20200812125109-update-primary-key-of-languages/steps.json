@@ -1,0 +1,74 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "Language",
+      "field": "id"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Language",
+          "field": "code"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "LanguagesOnTranslations",
+      "field": "languageCode",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "LanguagesOnTranslations",
+      "field": "languageId"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "LanguagesOnTranslations",
+          "field": "language"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "newValue": "[languageCode]"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "LanguagesOnTranslations",
+          "field": "language"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "newValue": "[code]"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Model",
+          "model": "LanguagesOnTranslations"
+        },
+        "directive": "id"
+      },
+      "argument": "",
+      "newValue": "[translationId, languageCode]"
+    }
+  ]
+}

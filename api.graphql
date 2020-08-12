@@ -49,7 +49,6 @@ scalar Json
 type Language {
   code: String!
   createdAt: DateTime!
-  id: Int!
   index: Int!
   name: String!
   projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
@@ -113,7 +112,6 @@ input LanguageScalarWhereInput {
   AND: [LanguageScalarWhereInput!]
   code: StringFilter
   createdAt: DateTimeFilter
-  id: IntFilter
   index: IntFilter
   name: StringFilter
   NOT: [LanguageScalarWhereInput!]
@@ -165,7 +163,7 @@ input LanguagesOnTranslationsFilter {
 
 input LanguagesOnTranslationsScalarWhereInput {
   AND: [LanguagesOnTranslationsScalarWhereInput!]
-  languageId: IntFilter
+  languageCode: StringFilter
   NOT: [LanguagesOnTranslationsScalarWhereInput!]
   OR: [LanguagesOnTranslationsScalarWhereInput!]
   translationId: IntFilter
@@ -246,7 +244,7 @@ input LanguagesOnTranslationsUpsertWithWhereUniqueWithoutTranslationInput {
 input LanguagesOnTranslationsWhereInput {
   AND: [LanguagesOnTranslationsWhereInput!]
   language: LanguageWhereInput
-  languageId: IntFilter
+  languageCode: StringFilter
   NOT: [LanguagesOnTranslationsWhereInput!]
   OR: [LanguagesOnTranslationsWhereInput!]
   translation: TranslationWhereInput
@@ -255,7 +253,7 @@ input LanguagesOnTranslationsWhereInput {
 }
 
 input LanguagesOnTranslationsWhereUniqueInput {
-  translationId_languageId: TranslationIdLanguageIdCompoundUniqueInput
+  translationId_languageCode: TranslationIdLanguageCodeCompoundUniqueInput
 }
 
 input LanguageUpdateInput {
@@ -346,7 +344,6 @@ input LanguageWhereInput {
   AND: [LanguageWhereInput!]
   code: StringFilter
   createdAt: DateTimeFilter
-  id: IntFilter
   index: IntFilter
   name: StringFilter
   NOT: [LanguageWhereInput!]
@@ -359,7 +356,7 @@ input LanguageWhereInput {
 }
 
 input LanguageWhereUniqueInput {
-  id: Int
+  code: String
 }
 
 type Mutation {
@@ -731,8 +728,8 @@ input TranslationFilter {
   some: TranslationWhereInput
 }
 
-input TranslationIdLanguageIdCompoundUniqueInput {
-  languageId: Int!
+input TranslationIdLanguageCodeCompoundUniqueInput {
+  languageCode: String!
   translationId: Int!
 }
 

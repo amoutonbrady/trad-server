@@ -1,3 +1,4 @@
 # Prisma Migrate lockfile v1
 
 20200810210350-init
+20200812125109-update-primary-key-of-languages
