@@ -53,7 +53,7 @@ type Language {
   name: String!
   projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
   rtl: Boolean!
-  slug: String!
+  slug: String
   translations(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
   updatedAt: DateTime!
 }
@@ -65,7 +65,7 @@ input LanguageCreateInput {
   name: String!
   projects: ProjectCreateManyWithoutLanguagesInput
   rtl: Boolean
-  slug: String!
+  slug: String
   translations: LanguagesOnTranslationsCreateManyWithoutLanguageInput
   updatedAt: DateTime
 }
@@ -86,7 +86,7 @@ input LanguageCreateWithoutProjectsInput {
   index: Int
   name: String!
   rtl: Boolean
-  slug: String!
+  slug: String
   translations: LanguagesOnTranslationsCreateManyWithoutLanguageInput
   updatedAt: DateTime
 }
@@ -98,7 +98,7 @@ input LanguageCreateWithoutTranslationsInput {
   name: String!
   projects: ProjectCreateManyWithoutLanguagesInput
   rtl: Boolean
-  slug: String!
+  slug: String
   updatedAt: DateTime
 }
 
@@ -118,7 +118,7 @@ input LanguageScalarWhereInput {
   OR: [LanguageScalarWhereInput!]
   projects: ProjectFilter
   rtl: BooleanFilter
-  slug: StringFilter
+  slug: NullableStringFilter
   translations: LanguagesOnTranslationsFilter
   updatedAt: DateTimeFilter
 }
@@ -350,7 +350,7 @@ input LanguageWhereInput {
   OR: [LanguageWhereInput!]
   projects: ProjectFilter
   rtl: BooleanFilter
-  slug: StringFilter
+  slug: NullableStringFilter
   translations: LanguagesOnTranslationsFilter
   updatedAt: DateTimeFilter
 }
@@ -412,7 +412,7 @@ type Project {
   index: Int!
   name: String!
   screenshot: String
-  slug: String!
+  slug: String
   updatedAt: DateTime!
   users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
   views(after: ViewWhereUniqueInput, before: ViewWhereUniqueInput, first: Int, last: Int): [View!]!
@@ -424,7 +424,7 @@ input ProjectCreateInput {
   languages: LanguageCreateManyWithoutProjectsInput
   name: String!
   screenshot: String
-  slug: String!
+  slug: String
   updatedAt: DateTime
   users: UserCreateManyWithoutProjectsInput
   views: ViewCreateManyWithoutProjectInput
@@ -450,7 +450,7 @@ input ProjectCreateWithoutLanguagesInput {
   index: Int
   name: String!
   screenshot: String
-  slug: String!
+  slug: String
   updatedAt: DateTime
   users: UserCreateManyWithoutProjectsInput
   views: ViewCreateManyWithoutProjectInput
@@ -462,7 +462,7 @@ input ProjectCreateWithoutUsersInput {
   languages: LanguageCreateManyWithoutProjectsInput
   name: String!
   screenshot: String
-  slug: String!
+  slug: String
   updatedAt: DateTime
   views: ViewCreateManyWithoutProjectInput
 }
@@ -473,7 +473,7 @@ input ProjectCreateWithoutViewsInput {
   languages: LanguageCreateManyWithoutProjectsInput
   name: String!
   screenshot: String
-  slug: String!
+  slug: String
   updatedAt: DateTime
   users: UserCreateManyWithoutProjectsInput
 }
@@ -494,7 +494,7 @@ input ProjectScalarWhereInput {
   NOT: [ProjectScalarWhereInput!]
   OR: [ProjectScalarWhereInput!]
   screenshot: NullableStringFilter
-  slug: StringFilter
+  slug: NullableStringFilter
   updatedAt: DateTimeFilter
   users: UserFilter
   views: ViewFilter
@@ -627,7 +627,7 @@ input ProjectWhereInput {
   NOT: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   screenshot: NullableStringFilter
-  slug: StringFilter
+  slug: NullableStringFilter
   updatedAt: DateTimeFilter
   users: UserFilter
   views: ViewFilter
@@ -982,7 +982,7 @@ type View {
   name: String!
   project: Project!
   screenshot: String
-  slug: String!
+  slug: String
   translation(after: TranslationWhereUniqueInput, before: TranslationWhereUniqueInput, first: Int, last: Int): [Translation!]!
   updatedAt: DateTime!
 }
@@ -993,7 +993,7 @@ input ViewCreateInput {
   name: String!
   project: ProjectCreateOneWithoutViewsInput!
   screenshot: String
-  slug: String!
+  slug: String
   translation: TranslationCreateManyWithoutViewInput
   updatedAt: DateTime
 }
@@ -1013,7 +1013,7 @@ input ViewCreateWithoutProjectInput {
   index: Int
   name: String!
   screenshot: String
-  slug: String!
+  slug: String
   translation: TranslationCreateManyWithoutViewInput
   updatedAt: DateTime
 }
@@ -1024,7 +1024,7 @@ input ViewCreateWithoutTranslationInput {
   name: String!
   project: ProjectCreateOneWithoutViewsInput!
   screenshot: String
-  slug: String!
+  slug: String
   updatedAt: DateTime
 }
 
@@ -1044,7 +1044,7 @@ input ViewScalarWhereInput {
   OR: [ViewScalarWhereInput!]
   projectId: IntFilter
   screenshot: NullableStringFilter
-  slug: StringFilter
+  slug: NullableStringFilter
   translation: TranslationFilter
   updatedAt: DateTimeFilter
 }
@@ -1140,7 +1140,7 @@ input ViewWhereInput {
   project: ProjectWhereInput
   projectId: IntFilter
   screenshot: NullableStringFilter
-  slug: StringFilter
+  slug: NullableStringFilter
   translation: TranslationFilter
   updatedAt: DateTimeFilter
 }

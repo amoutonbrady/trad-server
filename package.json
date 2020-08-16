@@ -3,8 +3,10 @@
   "license": "UNLICENSED",
   "version": "0.0.0",
   "dependencies": {
+    "@sindresorhus/slugify": "^1.1.0",
     "@types/jsonwebtoken": "^8.5.0",
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "graphql-voyager": "^1.0.0-rc.31",
     "jsonwebtoken": "^8.5.1",
     "nexus": "0.26.1",

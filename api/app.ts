@@ -1,4 +1,5 @@
 import { use, server } from 'nexus'
+import cors from 'cors'
 import { prisma } from 'nexus-plugin-prisma'
 import { auth } from 'nexus-plugin-jwt-auth'
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware'
@@ -23,3 +24,4 @@ use(
 )
 
 server.express.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }))
+server.express.use(cors({ origin: true }))

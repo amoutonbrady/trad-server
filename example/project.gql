@@ -1,0 +1,22 @@
+mutation CreateProject($create: ProjectCreateInput!) {
+  createOneProject(data: $create) {
+    id
+  }
+}
+
+mutation UpdateProject($update: ProjectUpdateInput!, $where: ProjectWhereUniqueInput!) {
+  updateOneProject(data: $update, where: $where) {
+    id
+  }
+}
+
+# Query Variables
+{
+  "create": {
+    "name": "Ticket",
+    "slug": "ticket",
+    "languages": { "connect": { "id": 1 } }
+  },
+  "update": { "users": { "connect": { "id": 1 } } },
+  "where": { "id": 1 }
+}

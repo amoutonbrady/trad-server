@@ -4,6 +4,44 @@ mutation CreateUser($user: UserCreateInput!) {
   }
 }
 
+query getUsers {
+  users {
+    id
+    email
+    name
+    projects {
+      name
+      views {
+        name
+        translation {
+          key
+          label
+          languages {
+            value
+            language {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTranslationsByLanguages {
+  languages(where: { projects: { every: { id: { equals: 1 } } } }) {
+    name
+    translations {
+      value
+      translation {
+        key
+        label
+      }
+    }
+  }
+}
+
+
 # Query Variables
 {
   "user": {
