@@ -35,13 +35,8 @@ schema.mutationType({
 
     t.crud.createOneUser({
       async resolve(root, args, ctx, info, originalResolve) {
-        const password = await bcrypt.hash(args.data.password, 10)
-        return originalResolve(
-          root,
-          { data: { ...args.data, password } },
-          ctx,
-          info,
-        )
+        args.data.password = await bcrypt.hash(args.data.password, 10)
+        return originalResolve(root, args, ctx, info)
       },
     })
     t.crud.updateOneUser({
