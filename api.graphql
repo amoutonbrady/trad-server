@@ -357,6 +357,8 @@ input LanguageWhereInput {
 
 input LanguageWhereUniqueInput {
   code: String
+  name: String
+  slug: String
 }
 
 type Mutation {
@@ -410,6 +412,7 @@ type Project {
   createdAt: DateTime!
   id: Int!
   index: Int!
+  languages(after: LanguageWhereUniqueInput, before: LanguageWhereUniqueInput, first: Int, last: Int): [Language!]!
   name: String!
   screenshot: String
   slug: String
@@ -635,6 +638,8 @@ input ProjectWhereInput {
 
 input ProjectWhereUniqueInput {
   id: Int
+  name: String
+  slug: String
 }
 
 type Query {
@@ -1147,4 +1152,6 @@ input ViewWhereInput {
 
 input ViewWhereUniqueInput {
   id: Int
+  name: String
+  slug: String
 }

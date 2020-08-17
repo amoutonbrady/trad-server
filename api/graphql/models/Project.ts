@@ -12,6 +12,7 @@ schema.objectType({
 
     t.model.users()
     t.model.views()
+    t.model.languages()
 
     t.model.createdAt()
     t.model.updatedAt()
