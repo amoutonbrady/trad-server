@@ -93,7 +93,18 @@ schema.mutationType({
 
     t.crud.createOneTranslation()
     t.crud.updateOneTranslation()
-    t.crud.deleteOneTranslation()
+    t.crud.deleteOneTranslation({
+      async resolve(_, args, ctx) {
+        await ctx.db.languagesOnTranslations.deleteMany({
+          where: { translationId: { equals: args.where.id! } },
+        })
+        const translation = ctx.db.translation.delete({
+          where: { id: args.where.id! },
+        })
+
+        return translation
+      },
+    })
 
     t.crud.createOneLanguage({
       async resolve(root, args, ctx, info, originalResolve) {
