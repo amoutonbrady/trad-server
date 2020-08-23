@@ -7,9 +7,9 @@ type AuthPayload {
   user: User
 }
 
-input BooleanFilter {
+input BoolFilter {
   equals: Boolean
-  not: Boolean
+  not: NestedBoolFilter
 }
 
 """
@@ -26,8 +26,19 @@ input DateTimeFilter {
   in: [DateTime!]
   lt: DateTime
   lte: DateTime
-  not: DateTime
+  not: NestedDateTimeFilter
   notIn: [DateTime!]
+}
+
+input FloatNullableFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatNullableFilter
+  notIn: [Float!]
 }
 
 input IntFilter {
@@ -37,7 +48,7 @@ input IntFilter {
   in: [Int!]
   lt: Int
   lte: Int
-  not: Int
+  not: NestedIntFilter
   notIn: [Int!]
 }
 
@@ -51,10 +62,10 @@ type Language {
   createdAt: DateTime!
   index: Int!
   name: String!
-  projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
+  projects(cursor: ProjectWhereUniqueInput, skip: Int, take: Int): [Project!]!
   rtl: Boolean!
   slug: String
-  translations(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
+  translations(cursor: LanguagesOnTranslationsWhereUniqueInput, skip: Int, take: Int): [LanguagesOnTranslations!]!
   updatedAt: DateTime!
 }
 
@@ -102,10 +113,20 @@ input LanguageCreateWithoutTranslationsInput {
   updatedAt: DateTime
 }
 
-input LanguageFilter {
+input LanguageListRelationFilter {
   every: LanguageWhereInput
   none: LanguageWhereInput
   some: LanguageWhereInput
+}
+
+input LanguageOrderByInput {
+  code: SortOrder
+  createdAt: SortOrder
+  index: SortOrder
+  name: SortOrder
+  rtl: SortOrder
+  slug: SortOrder
+  updatedAt: SortOrder
 }
 
 input LanguageScalarWhereInput {
@@ -116,10 +137,8 @@ input LanguageScalarWhereInput {
   name: StringFilter
   NOT: [LanguageScalarWhereInput!]
   OR: [LanguageScalarWhereInput!]
-  projects: ProjectFilter
-  rtl: BooleanFilter
-  slug: NullableStringFilter
-  translations: LanguagesOnTranslationsFilter
+  rtl: BoolFilter
+  slug: StringNullableFilter
   updatedAt: DateTimeFilter
 }
 
@@ -155,10 +174,16 @@ input LanguagesOnTranslationsCreateWithoutTranslationInput {
   value: String!
 }
 
-input LanguagesOnTranslationsFilter {
+input LanguagesOnTranslationsListRelationFilter {
   every: LanguagesOnTranslationsWhereInput
   none: LanguagesOnTranslationsWhereInput
   some: LanguagesOnTranslationsWhereInput
+}
+
+input LanguagesOnTranslationsOrderByInput {
+  languageCode: SortOrder
+  translationId: SortOrder
+  value: SortOrder
 }
 
 input LanguagesOnTranslationsScalarWhereInput {
@@ -348,10 +373,10 @@ input LanguageWhereInput {
   name: StringFilter
   NOT: [LanguageWhereInput!]
   OR: [LanguageWhereInput!]
-  projects: ProjectFilter
-  rtl: BooleanFilter
-  slug: NullableStringFilter
-  translations: LanguagesOnTranslationsFilter
+  projects: ProjectListRelationFilter
+  rtl: BoolFilter
+  slug: StringNullableFilter
+  translations: LanguagesOnTranslationsListRelationFilter
   updatedAt: DateTimeFilter
 }
 
@@ -383,18 +408,45 @@ type Mutation {
   updateOneView(data: ViewUpdateInput!, where: ViewWhereUniqueInput!): View
 }
 
-input NullableFloatFilter {
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedFloatNullableFilter {
   equals: Float
   gt: Float
   gte: Float
   in: [Float!]
   lt: Float
   lte: Float
-  not: Float
+  not: NestedFloatNullableFilter
   notIn: [Float!]
 }
 
-input NullableStringFilter {
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
   contains: String
   endsWith: String
   equals: String
@@ -403,7 +455,21 @@ input NullableStringFilter {
   in: [String!]
   lt: String
   lte: String
-  not: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }
@@ -412,13 +478,13 @@ type Project {
   createdAt: DateTime!
   id: Int!
   index: Int!
-  languages(after: LanguageWhereUniqueInput, before: LanguageWhereUniqueInput, first: Int, last: Int): [Language!]!
+  languages(cursor: LanguageWhereUniqueInput, skip: Int, take: Int): [Language!]!
   name: String!
   screenshot: String
   slug: String
   updatedAt: DateTime!
-  users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
-  views(after: ViewWhereUniqueInput, before: ViewWhereUniqueInput, first: Int, last: Int): [View!]!
+  users(cursor: UserWhereUniqueInput, skip: Int, take: Int): [User!]!
+  views(cursor: ViewWhereUniqueInput, skip: Int, take: Int): [View!]!
 }
 
 input ProjectCreateInput {
@@ -481,7 +547,7 @@ input ProjectCreateWithoutViewsInput {
   users: UserCreateManyWithoutProjectsInput
 }
 
-input ProjectFilter {
+input ProjectListRelationFilter {
   every: ProjectWhereInput
   none: ProjectWhereInput
   some: ProjectWhereInput
@@ -492,15 +558,12 @@ input ProjectScalarWhereInput {
   createdAt: DateTimeFilter
   id: IntFilter
   index: IntFilter
-  languages: LanguageFilter
   name: StringFilter
   NOT: [ProjectScalarWhereInput!]
   OR: [ProjectScalarWhereInput!]
-  screenshot: NullableStringFilter
-  slug: NullableStringFilter
+  screenshot: StringNullableFilter
+  slug: StringNullableFilter
   updatedAt: DateTimeFilter
-  users: UserFilter
-  views: ViewFilter
 }
 
 input ProjectUpdateInput {
@@ -625,15 +688,15 @@ input ProjectWhereInput {
   createdAt: DateTimeFilter
   id: IntFilter
   index: IntFilter
-  languages: LanguageFilter
+  languages: LanguageListRelationFilter
   name: StringFilter
   NOT: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
-  screenshot: NullableStringFilter
-  slug: NullableStringFilter
+  screenshot: StringNullableFilter
+  slug: StringNullableFilter
   updatedAt: DateTimeFilter
-  users: UserFilter
-  views: ViewFilter
+  users: UserListRelationFilter
+  views: ViewListRelationFilter
 }
 
 input ProjectWhereUniqueInput {
@@ -644,16 +707,21 @@ input ProjectWhereUniqueInput {
 
 type Query {
   language(where: LanguageWhereUniqueInput!): Language
-  languages(after: LanguageWhereUniqueInput, before: LanguageWhereUniqueInput, first: Int, last: Int, where: LanguageWhereInput): [Language!]!
-  languagesOnTranslations(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
+  languages(cursor: LanguageWhereUniqueInput, orderBy: [LanguageOrderByInput!], skip: Int, take: Int, where: LanguageWhereInput): [Language!]!
+  languagesOnTranslations(cursor: LanguagesOnTranslationsWhereUniqueInput, orderBy: [LanguagesOnTranslationsOrderByInput!], skip: Int, take: Int): [LanguagesOnTranslations!]!
   project(where: ProjectWhereUniqueInput!): Project
-  projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
+  projects(cursor: ProjectWhereUniqueInput, skip: Int, take: Int): [Project!]!
   translation(where: TranslationWhereUniqueInput!): Translation
-  translations(after: TranslationWhereUniqueInput, before: TranslationWhereUniqueInput, first: Int, last: Int): [Translation!]!
+  translations(cursor: TranslationWhereUniqueInput, orderBy: [TranslationOrderByInput!], skip: Int, take: Int): [Translation!]!
   user(where: UserWhereUniqueInput!): User
-  users(after: UserWhereUniqueInput, before: UserWhereUniqueInput, first: Int, last: Int): [User!]!
+  users(cursor: UserWhereUniqueInput, skip: Int, take: Int): [User!]!
   view(where: ViewWhereUniqueInput!): View
-  views(after: ViewWhereUniqueInput, before: ViewWhereUniqueInput, first: Int, last: Int): [View!]!
+  views(cursor: ViewWhereUniqueInput, skip: Int, take: Int, where: ViewWhereInput): [View!]!
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 input StringFilter {
@@ -665,7 +733,21 @@ input StringFilter {
   in: [String!]
   lt: String
   lte: String
-  not: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }
@@ -676,7 +758,7 @@ type Translation {
   index: Int!
   key: String!
   label: String
-  languages(after: LanguagesOnTranslationsWhereUniqueInput, before: LanguagesOnTranslationsWhereUniqueInput, first: Int, last: Int): [LanguagesOnTranslations!]!
+  languages(cursor: LanguagesOnTranslationsWhereUniqueInput, skip: Int, take: Int): [LanguagesOnTranslations!]!
   updatedAt: DateTime!
   view: View!
   x: Float
@@ -727,15 +809,27 @@ input TranslationCreateWithoutViewInput {
   y: Float
 }
 
-input TranslationFilter {
+input TranslationIdLanguageCodeCompoundUniqueInput {
+  languageCode: String!
+  translationId: Int!
+}
+
+input TranslationListRelationFilter {
   every: TranslationWhereInput
   none: TranslationWhereInput
   some: TranslationWhereInput
 }
 
-input TranslationIdLanguageCodeCompoundUniqueInput {
-  languageCode: String!
-  translationId: Int!
+input TranslationOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  index: SortOrder
+  key: SortOrder
+  label: SortOrder
+  updatedAt: SortOrder
+  viewId: SortOrder
+  x: SortOrder
+  y: SortOrder
 }
 
 input TranslationScalarWhereInput {
@@ -744,14 +838,13 @@ input TranslationScalarWhereInput {
   id: IntFilter
   index: IntFilter
   key: StringFilter
-  label: NullableStringFilter
-  languages: LanguagesOnTranslationsFilter
+  label: StringNullableFilter
   NOT: [TranslationScalarWhereInput!]
   OR: [TranslationScalarWhereInput!]
   updatedAt: DateTimeFilter
   viewId: IntFilter
-  x: NullableFloatFilter
-  y: NullableFloatFilter
+  x: FloatNullableFilter
+  y: FloatNullableFilter
 }
 
 input TranslationUpdateInput {
@@ -844,15 +937,15 @@ input TranslationWhereInput {
   id: IntFilter
   index: IntFilter
   key: StringFilter
-  label: NullableStringFilter
-  languages: LanguagesOnTranslationsFilter
+  label: StringNullableFilter
+  languages: LanguagesOnTranslationsListRelationFilter
   NOT: [TranslationWhereInput!]
   OR: [TranslationWhereInput!]
   updatedAt: DateTimeFilter
   view: ViewWhereInput
   viewId: IntFilter
-  x: NullableFloatFilter
-  y: NullableFloatFilter
+  x: FloatNullableFilter
+  y: FloatNullableFilter
 }
 
 input TranslationWhereUniqueInput {
@@ -864,7 +957,7 @@ type User {
   email: String!
   id: Int!
   name: String!
-  projects(after: ProjectWhereUniqueInput, before: ProjectWhereUniqueInput, first: Int, last: Int): [Project!]!
+  projects(cursor: ProjectWhereUniqueInput, skip: Int, take: Int): [Project!]!
   updatedAt: DateTime!
 }
 
@@ -890,7 +983,7 @@ input UserCreateWithoutProjectsInput {
   updatedAt: DateTime
 }
 
-input UserFilter {
+input UserListRelationFilter {
   every: UserWhereInput
   none: UserWhereInput
   some: UserWhereInput
@@ -905,7 +998,6 @@ input UserScalarWhereInput {
   NOT: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   password: StringFilter
-  projects: ProjectFilter
   updatedAt: DateTimeFilter
 }
 
@@ -971,7 +1063,7 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
   password: StringFilter
-  projects: ProjectFilter
+  projects: ProjectListRelationFilter
   updatedAt: DateTimeFilter
 }
 
@@ -988,7 +1080,7 @@ type View {
   project: Project!
   screenshot: String
   slug: String
-  translation(after: TranslationWhereUniqueInput, before: TranslationWhereUniqueInput, first: Int, last: Int): [Translation!]!
+  translation(cursor: TranslationWhereUniqueInput, skip: Int, take: Int): [Translation!]!
   updatedAt: DateTime!
 }
 
@@ -1033,7 +1125,7 @@ input ViewCreateWithoutTranslationInput {
   updatedAt: DateTime
 }
 
-input ViewFilter {
+input ViewListRelationFilter {
   every: ViewWhereInput
   none: ViewWhereInput
   some: ViewWhereInput
@@ -1048,9 +1140,8 @@ input ViewScalarWhereInput {
   NOT: [ViewScalarWhereInput!]
   OR: [ViewScalarWhereInput!]
   projectId: IntFilter
-  screenshot: NullableStringFilter
-  slug: NullableStringFilter
-  translation: TranslationFilter
+  screenshot: StringNullableFilter
+  slug: StringNullableFilter
   updatedAt: DateTimeFilter
 }
 
@@ -1144,9 +1235,9 @@ input ViewWhereInput {
   OR: [ViewWhereInput!]
   project: ProjectWhereInput
   projectId: IntFilter
-  screenshot: NullableStringFilter
-  slug: NullableStringFilter
-  translation: TranslationFilter
+  screenshot: StringNullableFilter
+  slug: StringNullableFilter
+  translation: TranslationListRelationFilter
   updatedAt: DateTimeFilter
 }
 
